@@ -18,11 +18,13 @@ youdens_J <- function(model, dataset) {
     FN <- confusion[2, 1]
     sensitivity <- TP / (TP + FN)
     specificity <- TN / (TN + FP)
+    lst$sensitivity[[i]] <- sensitivity
+    lst$specificity[[i]] <- specificity
     lst$Youdens_J[[i]] <- sensitivity + specificity - 1
   }
   print(class(lst$Youdens_J))
-  lst$optimal_cutoff <- lst$cutoff[which.max(lst$Youdens_J)]
-  lst$optimal_J <- max(lst$Youdens_J)
+  lst$optimal_J <- max(unlist(lst$Youdens_J))
+  lst$optimal_cutoff <- lst$cutoff[which(lst$Youdens_J == lst$optimal_J)]
   return(lst)
 }
 
