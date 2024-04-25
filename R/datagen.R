@@ -1,3 +1,5 @@
+
+#' @export
 data_gen <- function(size, center) {
   pred <- rnorm(size, center, 1)
   prob <- exp(pred) / (1 + exp(pred))
