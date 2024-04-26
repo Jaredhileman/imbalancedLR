@@ -10,7 +10,7 @@
 #' @param sd The standard deviation of the normal distribution
 #' @return A data frame with columns Y and X
 #'
-#' #' @export
+#' @export
 data_gen <- function(size, center, sd = 1) {
   pred <- rnorm(size, center, sd)
   prob <- exp(pred) / (1 + exp(pred))

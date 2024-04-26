@@ -32,15 +32,16 @@ best_cutoff <- function(dataset) {
   lst$sensitivity <- unlist(lst$sensitivity)
   lst$specificity <- unlist(lst$specificity)
   lst$Youdens_J <- unlist(lst$Youdens_J)
-  sortedJ <- sort(lst$Youdens_J, decreasing = TRUE)
-
   done = FALSE
-  for (j in sortedJ) {
-    if (lst$dist[j == lst$Youdens_J] < 0.1) {
-      lst$optimal_J <- j
-      lst$optimal_cutoff <- lst$cutoff[j == lst$Youdens_J]
-      done = TRUE
-      break
+  sorted_indices <- order(lst$Youdens_J, decreasing = TRUE)
+
+  # Iterate over these indices
+  for (index in sorted_indices) {
+    # Use 'index' to reference the correct items in lst$dist and lst$Youdens_J
+    if (lst$dist[index] < 0.1) {
+      lst$optimal_J <- lst$Youdens_J[index]
+      lst$optimal_cutoff <- lst$cutoff[index]
+      break  # Exit the loop once the condition is met
     }
   }
 

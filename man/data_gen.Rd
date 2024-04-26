@@ -15,8 +15,6 @@ data_gen(size, center, sd = 1)
 }
 \value{
 A data frame with columns Y and X
-
-#' @export
 }
 \description{
 Utilizes a random normal generation with mean, sd set by user. The function
