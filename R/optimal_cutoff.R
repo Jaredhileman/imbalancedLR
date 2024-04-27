@@ -3,7 +3,7 @@
 best_cutoff <- function(dataset) {
   model <- glm(Y ~ ., data = dataset, family = binomial)
   pred <- predict(model, dataset, type = "response")
-  cutoff <- seq(0, 1, .05)
+  cutoff <- seq(0.05, 0.95, .05)
   lst <- list()
   lst$prediction_matrix <- lapply(cutoff,
                                   function(val) ifelse(pred > val, 1, 0))
@@ -41,12 +41,19 @@ best_cutoff <- function(dataset) {
     if (lst$dist[index] < 0.1) {
       lst$optimal_J <- lst$Youdens_J[index]
       lst$optimal_cutoff <- lst$cutoff[index]
+      lst$optimal_sensitivity <- lst$sensitivity[index]
+      lst$optimal_specificity <- lst$specificity[index]
+      done = TRUE
       break  # Exit the loop once the condition is met
     }
   }
 
   if (!done) {
-    lst$optimal_J <- NULL
+    lst$optimal_J <- max(lst$Youdens_J)
+    lst$optimal_cutoff <- lst$cutoff[which.max(lst$Youdens_J)]
+    lst$optimal_sensitivity <- lst$sensitivity[which.max(lst$Youdens_J)]
+    lst$optimal_specificity <- lst$specificity[which.max(lst$Youdens_J)]
+    done = TRUE
   }
 
   return(lst)
